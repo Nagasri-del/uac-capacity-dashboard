@@ -1,0 +1,13 @@
+System Capacity & Care Load Analytics for Unaccompanied Children
+
+The Unaccompanied Alien Children (UAC) program represents a dynamic care pipeline involving intake into CBP custody, transfer into HHS care, provision of medical and welfare services, and eventual discharge through sponsor placement. Effective operation of this pipeline depends on continuous awareness of system capacity and care load dynamics, particularly during periods of sudden influx.
+
+This project develops an analytical framework and interactive dashboard to transform daily operational counts into actionable indicators of system performance and capacity pressure. Using time-series data spanning 2023–2025, the analysis quantifies system-wide care responsibility, evaluates inflow and outflow balance, and identifies periods of strain and relief across CBP and HHS care systems.
+
+Key derived indicators include total system load, net HHS intake pressure, backlog persistence, load volatility, and strain-day detection based on high occupancy and positive intake imbalance. Data quality validation and reporting-gap identification were incorporated to ensure transparency and analytical reliability.
+
+Findings indicate episodic capacity pressure characterized by localized strain windows rather than sustained structural overload. Backlog accumulation periods were short-lived, suggesting operational responsiveness in discharge processes. Load volatility declined over time, reflecting improved system stabilization and throughput efficiency.
+
+The accompanying Streamlit dashboard operationalizes these insights into an interactive monitoring tool supporting real-time situational awareness, staffing and shelter planning, and policy evaluation.
+
+Overall, the project demonstrates how structured healthcare analytics can enhance humanitarian response oversight by converting fragmented operational data into interpretable capacity intelligence.
