@@ -7,8 +7,9 @@ st.set_page_config(page_title="UAC Capacity Dashboard", layout="wide")
 st.title("System Capacity & Care Load Analytics — Unaccompanied Children")
 
 # ---- Load data ----
-BASE_DIR = Path(r"D:\uac_capacity_project")
-data_path = BASE_DIR / "data" / "processed" / "uac_metrics_final.csv"
+# Load data using repo-relative path (works locally + on Streamlit Cloud)
+ROOT_DIR = Path(__file__).resolve().parents[1]
+data_path = ROOT_DIR / "data" / "processed" / "uac_metrics_final.csv"
 
 @st.cache_data
 def load_data(path):
