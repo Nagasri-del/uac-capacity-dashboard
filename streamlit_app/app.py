@@ -1,13 +1,19 @@
-import pandas as pd
-import numpy as np
-import streamlit as st
-from pathlib import Path
+                         
+  APP_VERSION = "cloud-debug-v1"
+st.caption(f"App version: {APP_VERSION}")
 
 st.set_page_config(page_title="UAC Capacity Dashboard", layout="wide")
 st.title("System Capacity & Care Load Analytics — Unaccompanied Children")
 
-# ---- Load data ----
-# Load data using repo-relative path (works locally + on Streamlit Cloud)
+from pathlib import Path
+import pandas as pd
+import streamlit as st
+
+APP_VERSION = "cloud-debug-v1"
+st.set_page_config(page_title="UAC Capacity Dashboard", layout="wide")
+st.title("System Capacity & Care Load Analytics — Unaccompanied Children")
+st.caption(f"App version: {APP_VERSION}")
+
 ROOT_DIR = Path(__file__).resolve().parents[1]
 processed_dir = ROOT_DIR / "data" / "processed"
 
@@ -15,12 +21,37 @@ st.write("ROOT_DIR:", str(ROOT_DIR))
 st.write("processed_dir:", str(processed_dir))
 st.write("processed_dir exists?:", processed_dir.exists())
 
-if processed_dir.exists():
-    st.write("Files in processed_dir:", sorted([p.name for p in processed_dir.glob("*")]))
-else:
-    st.write("Repo root files:", sorted([p.name for p in ROOT_DIR.glob("*")]))
+# Show what's in repo root + processed dir (so we stop guessing)
+st.write("Repo root items:", sorted([p.name for p in ROOT_DIR.glob("*")]))
 
-csv_files = list(processed_dir.glob("*.csv"))
+if processed_dir.exists():
+    st.write("Processed dir items:", sorted([p.name for p in processed_dir.glob("*")]))
+else:
+    st.error("processed_dir does not exist on Streamlit Cloud. Check repo structure.")
+    st.stop()
+
+csv_files = sorted(processed_dir.glob("*.csv"))
+st.write("CSV files found:", [p.name for p in csv_files])
+
+if len(csv_files) == 0:
+    st.error("No CSV found in data/processed on Streamlit Cloud.")
+    st.stop()
+
+data_path = csv_files[0]
+st.success(f"Using CSV: {data_path.name}")
+st.write("Full CSV path:", str(data_path))
+st.write("CSV exists?:", data_path.exists())
+
+if not data_path.exists():
+    st.error("CSV path does not exist at runtime (case/name mismatch or repo not updated).")
+    st.stop()
+
+# IMPORTANT: use str(data_path) and no cache for now (avoid stale caching)
+df = pd.read_csv(str(data_path), parse_dates=["date"])
+
+st.subheader("Preview")
+st.dataframe(df.head(20))
+
 
 if len(csv_files) == 0:
     st.error("No CSV found in data/processed folder")
