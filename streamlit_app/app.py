@@ -11,6 +11,15 @@ st.title("System Capacity & Care Load Analytics — Unaccompanied Children")
 ROOT_DIR = Path(__file__).resolve().parents[1]
 processed_dir = ROOT_DIR / "data" / "processed"
 
+st.write("ROOT_DIR:", str(ROOT_DIR))
+st.write("processed_dir:", str(processed_dir))
+st.write("processed_dir exists?:", processed_dir.exists())
+
+if processed_dir.exists():
+    st.write("Files in processed_dir:", sorted([p.name for p in processed_dir.glob("*")]))
+else:
+    st.write("Repo root files:", sorted([p.name for p in ROOT_DIR.glob("*")]))
+
 csv_files = list(processed_dir.glob("*.csv"))
 
 if len(csv_files) == 0:
