@@ -9,7 +9,16 @@ st.title("System Capacity & Care Load Analytics — Unaccompanied Children")
 # ---- Load data ----
 # Load data using repo-relative path (works locally + on Streamlit Cloud)
 ROOT_DIR = Path(__file__).resolve().parents[1]
-data_path = ROOT_DIR / "data" / "processed" / "uac_metrics_final.csv"
+processed_dir = ROOT_DIR / "data" / "processed"
+
+csv_files = list(processed_dir.glob("*.csv"))
+
+if len(csv_files) == 0:
+    st.error("No CSV found in data/processed folder")
+    st.stop()
+
+data_path = csv_files[0]
+st.write("Loading:", data_path.name)
 
 @st.cache_data
 def load_data(path):
